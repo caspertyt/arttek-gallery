@@ -52,7 +52,7 @@ export default function MobileMenu({ dict, lang, isOpen, onClose }: MobileMenuPr
         </button>
 
         {/* Mobile Navigation */}
-        <div className="flex-1 flex flex-col justify-center items-center space-y-8">
+        <div className="flex flex-col items-center justify-center h-full space-y-8">
           <Link
             href={`/${lang}`}
             className={`text-2xl hover:text-red-500 transition-colors ${
