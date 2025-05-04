@@ -1,6 +1,8 @@
-import { translations } from './config';
+import { translations, type Locale } from './config';
 
 export async function getDictionary(lang: string) {
-  const validLang = lang as keyof typeof translations;
-  return translations[validLang] || translations.ua;
+  if (Object.keys(translations).includes(lang)) {
+    return translations[lang as Locale];
+  }
+  return translations.ua;
 } 
