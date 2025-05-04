@@ -21,7 +21,17 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ dict, lang, isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
-  const currentPath = pathname.split('/')[2] || '';
+
+  // Функция для проверки активного состояния ссылки
+  const isActive = (path: string) => {
+    const currentPath = pathname.split('/').slice(2).join('/');
+    return currentPath === path;
+  };
+
+  // Функция для создания ссылки с учетом языка
+  const createLink = (path: string = '') => {
+    return `/${lang}${path ? `/${path}` : ''}`;
+  };
 
   if (!isOpen) return null;
 
@@ -54,72 +64,72 @@ export default function MobileMenu({ dict, lang, isOpen, onClose }: MobileMenuPr
         {/* Mobile Navigation */}
         <div className="flex-1 flex flex-col items-center justify-center space-y-8">
           <Link
-            href={`/${lang}`}
+            href={createLink()}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === '' ? 'text-red-500' : ''
+              isActive('') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
             {dict.home}
           </Link>
           <Link
-            href={`/${lang}/exhibitions`}
+            href={createLink('exhibitions')}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === 'exhibitions' ? 'text-red-500' : ''
+              isActive('exhibitions') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
             {dict.exhibitions}
           </Link>
           <Link
-            href={`/${lang}/gallery`}
+            href={createLink('gallery')}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === 'gallery' ? 'text-red-500' : ''
+              isActive('gallery') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
             {dict.gallery}
           </Link>
           <Link
-            href={`/${lang}/artists`}
+            href={createLink('artists')}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === 'artists' ? 'text-red-500' : ''
+              isActive('artists') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
             {dict.artists}
           </Link>
           <Link
-            href={`/${lang}/projects`}
+            href={createLink('projects')}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === 'projects' ? 'text-red-500' : ''
+              isActive('projects') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
             {dict.projects}
           </Link>
           <Link
-            href={`/${lang}/rent`}
+            href={createLink('rent')}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === 'rent' ? 'text-red-500' : ''
+              isActive('rent') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
             {dict.rent}
           </Link>
           <Link
-            href={`/${lang}/about`}
+            href={createLink('about')}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === 'about' ? 'text-red-500' : ''
+              isActive('about') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
             {dict.about}
           </Link>
           <Link
-            href={`/${lang}/contact`}
+            href={createLink('contact')}
             className={`text-2xl hover:text-red-500 transition-colors ${
-              currentPath === 'contact' ? 'text-red-500' : ''
+              isActive('contact') ? 'text-red-500' : ''
             }`}
             onClick={onClose}
           >
