@@ -43,7 +43,7 @@ export default async function Rent({
             </div>
             <div className="relative aspect-video">
               <Image
-                src="/images/arenda/3.jpg"
+                src="/images/Arenda/3.jpg"
                 alt="Пространство ARTTEK"
                 fill
                 className="object-cover rounded-lg"
@@ -59,10 +59,10 @@ export default async function Rent({
             <div className="absolute left-1/2 -translate-x-1/2 -bottom-4 w-24 h-1 bg-red-500 rounded"></div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[1,2,3,4,5,6].map(num => (
+            {[1,2,3,4,5].map(num => (
               <div key={num} className="relative aspect-[4/3] rounded-xl overflow-hidden group shadow-lg">
                 <Image
-                  src={`/images/arenda/${num}.jpg`}
+                  src={`/images/Arenda/${num}.jpg`}
                   alt={`Фото помещения ${num}`}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"

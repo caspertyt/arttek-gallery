@@ -4,6 +4,12 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com'],
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
   // Добавляем настройки для продакшена
   env: {
