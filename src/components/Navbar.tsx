@@ -1,9 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { i18n } from '@/i18n/config';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MobileMenu from './MobileMenu';
 
 interface NavbarProps {
@@ -24,9 +23,15 @@ export default function Navbar({ dict, lang }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Функция для проверки активного состояния ссылки
   const isActive = (path: string) => {
+    if (!mounted) return false;
     const currentPath = pathname.split('/').slice(2).join('/');
     return currentPath === path;
   };
@@ -36,11 +41,20 @@ export default function Navbar({ dict, lang }: NavbarProps) {
     return `/${lang}${path ? `/${path}` : ''}`;
   };
 
-  // Функция для обработки клика по ссылке
+  // Функция для обработки навигации
   const handleNavigation = (path: string) => {
     const href = createLink(path);
     router.push(href);
   };
+
+  // Функция для обработки смены языка
+  const handleLanguageChange = (newLang: string) => {
+    const currentPath = pathname.split('/').slice(2).join('/');
+    const newPath = `/${newLang}${currentPath ? `/${currentPath}` : ''}`;
+    router.push(newPath);
+  };
+
+  if (!mounted) return null;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] bg-black">
@@ -122,10 +136,7 @@ export default function Navbar({ dict, lang }: NavbarProps) {
                 {i18n.locales.map((locale) => (
                   <button
                     key={locale}
-                    onClick={() => {
-                      const newPath = pathname.replace(`/${lang}`, `/${locale}`);
-                      router.push(newPath);
-                    }}
+                    onClick={() => handleLanguageChange(locale)}
                     className={`text-sm uppercase hover:text-red-500 transition-colors ${
                       locale === lang ? 'text-red-500' : ''
                     }`}
