@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface MobileMenuProps {
   dict: {
@@ -21,6 +20,7 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ dict, lang, isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   // Функция для проверки активного состояния ссылки
   const isActive = (path: string) => {
@@ -31,6 +31,13 @@ export default function MobileMenu({ dict, lang, isOpen, onClose }: MobileMenuPr
   // Функция для создания ссылки с учетом языка
   const createLink = (path: string = '') => {
     return `/${lang}${path ? `/${path}` : ''}`;
+  };
+
+  // Функция для обработки навигации
+  const handleNavigation = (path: string) => {
+    const href = createLink(path);
+    router.push(href);
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -63,78 +70,70 @@ export default function MobileMenu({ dict, lang, isOpen, onClose }: MobileMenuPr
 
         {/* Mobile Navigation */}
         <div className="flex-1 flex flex-col items-center justify-center space-y-8">
-          <Link
-            href={createLink()}
+          <button
+            onClick={() => handleNavigation('')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.home}
-          </Link>
-          <Link
-            href={createLink('exhibitions')}
+          </button>
+          <button
+            onClick={() => handleNavigation('exhibitions')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('exhibitions') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.exhibitions}
-          </Link>
-          <Link
-            href={createLink('gallery')}
+          </button>
+          <button
+            onClick={() => handleNavigation('gallery')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('gallery') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.gallery}
-          </Link>
-          <Link
-            href={createLink('artists')}
+          </button>
+          <button
+            onClick={() => handleNavigation('artists')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('artists') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.artists}
-          </Link>
-          <Link
-            href={createLink('projects')}
+          </button>
+          <button
+            onClick={() => handleNavigation('projects')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('projects') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.projects}
-          </Link>
-          <Link
-            href={createLink('rent')}
+          </button>
+          <button
+            onClick={() => handleNavigation('rent')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('rent') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.rent}
-          </Link>
-          <Link
-            href={createLink('about')}
+          </button>
+          <button
+            onClick={() => handleNavigation('about')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('about') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.about}
-          </Link>
-          <Link
-            href={createLink('contact')}
+          </button>
+          <button
+            onClick={() => handleNavigation('contact')}
             className={`text-2xl hover:text-red-500 transition-colors ${
               isActive('contact') ? 'text-red-500' : ''
             }`}
-            onClick={onClose}
           >
             {dict.contact}
-          </Link>
+          </button>
         </div>
       </div>
     </div>

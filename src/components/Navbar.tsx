@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { i18n } from '@/i18n/config';
 import { useState } from 'react';
 import MobileMenu from './MobileMenu';
@@ -22,6 +22,7 @@ interface NavbarProps {
 
 export default function Navbar({ dict, lang }: NavbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Функция для проверки активного состояния ссылки
@@ -35,77 +36,83 @@ export default function Navbar({ dict, lang }: NavbarProps) {
     return `/${lang}${path ? `/${path}` : ''}`;
   };
 
+  // Функция для обработки клика по ссылке
+  const handleNavigation = (path: string) => {
+    const href = createLink(path);
+    router.push(href);
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] bg-black">
       <nav className="relative bg-black/80 backdrop-blur-sm border-b border-white/10">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link 
-              href={createLink()} 
+            <button 
+              onClick={() => handleNavigation('')}
               className="text-2xl font-bold hover:text-red-500 transition-colors"
             >
               ARTTEK
-            </Link>
+            </button>
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link
-                href={createLink('exhibitions')}
+              <button
+                onClick={() => handleNavigation('exhibitions')}
                 className={`hover:text-red-500 transition-colors ${
                   isActive('exhibitions') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.exhibitions}
-              </Link>
-              <Link
-                href={createLink('gallery')}
+              </button>
+              <button
+                onClick={() => handleNavigation('gallery')}
                 className={`hover:text-red-500 transition-colors ${
                   isActive('gallery') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.gallery}
-              </Link>
-              <Link
-                href={createLink('artists')}
+              </button>
+              <button
+                onClick={() => handleNavigation('artists')}
                 className={`hover:text-red-500 transition-colors ${
                   isActive('artists') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.artists}
-              </Link>
-              <Link
-                href={createLink('projects')}
+              </button>
+              <button
+                onClick={() => handleNavigation('projects')}
                 className={`hover:text-red-500 transition-colors ${
                   isActive('projects') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.projects}
-              </Link>
-              <Link
-                href={createLink('rent')}
+              </button>
+              <button
+                onClick={() => handleNavigation('rent')}
                 className={`hover:text-red-500 transition-colors ${
                   isActive('rent') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.rent}
-              </Link>
-              <Link
-                href={createLink('about')}
+              </button>
+              <button
+                onClick={() => handleNavigation('about')}
                 className={`hover:text-red-500 transition-colors ${
                   isActive('about') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.about}
-              </Link>
-              <Link
-                href={createLink('contact')}
+              </button>
+              <button
+                onClick={() => handleNavigation('contact')}
                 className={`hover:text-red-500 transition-colors ${
                   isActive('contact') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.contact}
-              </Link>
+              </button>
             </div>
 
             {/* Language Switcher and Mobile Menu Button */}
@@ -113,15 +120,18 @@ export default function Navbar({ dict, lang }: NavbarProps) {
               {/* Language Switcher */}
               <div className="flex items-center space-x-4">
                 {i18n.locales.map((locale) => (
-                  <Link
+                  <button
                     key={locale}
-                    href={pathname.replace(`/${lang}`, `/${locale}`)}
+                    onClick={() => {
+                      const newPath = pathname.replace(`/${lang}`, `/${locale}`);
+                      router.push(newPath);
+                    }}
                     className={`text-sm uppercase hover:text-red-500 transition-colors ${
                       locale === lang ? 'text-red-500' : ''
                     }`}
                   >
                     {locale}
-                  </Link>
+                  </button>
                 ))}
               </div>
 
