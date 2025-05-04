@@ -1,8 +1,8 @@
 import { translations, type Locale } from './config';
 
-export async function getDictionary(lang: string) {
-  if (Object.keys(translations).includes(lang)) {
-    return translations[lang as Locale];
-  }
-  return translations.ua;
+export async function getDictionary(lang: string): Promise<typeof translations[Locale]> {
+  // Проверяем, существует ли язык в translations
+  const isValidLang = lang in translations;
+  // Если язык существует, используем его, иначе используем украинский
+  return translations[isValidLang ? (lang as Locale) : 'ua'];
 } 
