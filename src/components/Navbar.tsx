@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { i18n } from '@/i18n/config';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MobileMenu from './MobileMenu';
 
 interface NavbarProps {
@@ -22,8 +22,38 @@ interface NavbarProps {
 
 export default function Navbar({ dict, lang }: NavbarProps) {
   const pathname = usePathname();
-  const currentPath = pathname.split('/')[2] || '';
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Функция для проверки активного состояния ссылки
+  const isActive = (path: string) => {
+    if (!mounted) return false;
+    const currentPath = pathname.split('/').slice(2).join('/');
+    if (path === '') {
+      return currentPath === '';
+    }
+    return currentPath === path;
+  };
+
+  // Функция для создания ссылки с учетом языка
+  const createLink = (path: string = '') => {
+    const basePath = `/${lang}`;
+    return path ? `${basePath}/${path}` : basePath;
+  };
+
+  // Функция для обработки клика по ссылке
+  const handleLinkClick = (path: string) => {
+    setIsMobileMenuOpen(false);
+    const href = createLink(path);
+    router.push(href);
+  };
+
+  if (!mounted) return null;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] bg-black">
@@ -31,64 +61,72 @@ export default function Navbar({ dict, lang }: NavbarProps) {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href={`/${lang}`} className="text-2xl font-bold hover:text-red-500 transition-colors">
+            <Link 
+              href={createLink()} 
+              className="text-2xl font-bold hover:text-red-500 transition-colors"
+              onClick={() => handleLinkClick('')}
+            >
               ARTTEK
             </Link>
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
               <Link
-                href={`/${lang}/exhibitions`}
+                href={createLink('exhibitions')}
                 className={`hover:text-red-500 transition-colors ${
-                  currentPath === 'exhibitions' ? 'text-red-500' : ''
+                  isActive('exhibitions') ? 'text-red-500' : ''
                 }`}
+                onClick={() => handleLinkClick('exhibitions')}
               >
                 {dict.exhibitions}
               </Link>
               <Link
-                href={`/${lang}/gallery`}
+                href={createLink('gallery')}
                 className={`hover:text-red-500 transition-colors ${
-                  currentPath === 'gallery' ? 'text-red-500' : ''
+                  isActive('gallery') ? 'text-red-500' : ''
                 }`}
+                onClick={() => handleLinkClick('gallery')}
               >
                 {dict.gallery}
               </Link>
               <Link
-                href={`/${lang}/artists`}
+                href={createLink('artists')}
                 className={`hover:text-red-500 transition-colors ${
-                  currentPath === 'artists' ? 'text-red-500' : ''
+                  isActive('artists') ? 'text-red-500' : ''
                 }`}
+                onClick={() => handleLinkClick('artists')}
               >
                 {dict.artists}
               </Link>
               <Link
-                href={`/${lang}/projects`}
+                href={createLink('projects')}
                 className={`hover:text-red-500 transition-colors ${
-                  currentPath === 'projects' ? 'text-red-500' : ''
+                  isActive('projects') ? 'text-red-500' : ''
                 }`}
+                onClick={() => handleLinkClick('projects')}
               >
                 {dict.projects}
               </Link>
               <Link
-                href={`/${lang}/rent`}
+                href={createLink('rent')}
                 className={`hover:text-red-500 transition-colors ${
-                  currentPath === 'rent' ? 'text-red-500' : ''
+                  isActive('rent') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.rent}
               </Link>
               <Link
-                href={`/${lang}/about`}
+                href={createLink('about')}
                 className={`hover:text-red-500 transition-colors ${
-                  currentPath === 'about' ? 'text-red-500' : ''
+                  isActive('about') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.about}
               </Link>
               <Link
-                href={`/${lang}/contact`}
+                href={createLink('contact')}
                 className={`hover:text-red-500 transition-colors ${
-                  currentPath === 'contact' ? 'text-red-500' : ''
+                  isActive('contact') ? 'text-red-500' : ''
                 }`}
               >
                 {dict.contact}
