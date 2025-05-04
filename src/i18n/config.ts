@@ -1,6 +1,6 @@
 export const i18n = {
   defaultLocale: 'ua',
-  locales: ['ua', 'en', 'es'],
+  locales: ['ua', 'en', 'es', 'ru'],
 } as const;
 
 export type Locale = (typeof i18n)['locales'][number];
@@ -68,5 +68,26 @@ export const translations = {
     phone: '+34 640 97 71 44',
     social: 'Redes sociales',
     rights: '© 2024 ARTTEK Gallery. Todos los derechos reservados.',
+  },
+  ru: {
+    home: 'Главная',
+    exhibitions: 'Выставки',
+    gallery: 'Галерея',
+    artists: 'Художники',
+    projects: 'Проекты',
+    rent: 'Аренда',
+    about: 'О галерее',
+    contact: 'Контакты',
+    joinClub: 'Клуб ARTTEK',
+    currentExhibitions: 'Текущие выставки',
+    upcomingExhibitions: 'Предстоящие выставки',
+    pastExhibitions: 'Прошедшие выставки',
+    availableForPurchase: 'Доступно для покупки',
+    contactForPurchase: 'Связаться для покупки',
+    address: 'Carrer de Balmes, 151, L\'Eixample, 08008 Barcelona',
+    email: 'info@arttek.gallery',
+    phone: '+34 640 97 71 44',
+    social: 'Социальные сети',
+    rights: '© 2024 ARTTEK Gallery. Все права защищены.',
   },
 }; 
