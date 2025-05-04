@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const defaultLocale = 'ua' // язык по умолчанию
-const locales = ['ua', 'en', 'es', 'ru'] // поддерживаемые языки
+const defaultLocale = 'ru' // язык по умолчанию
+const locales = ['ru', 'en', 'es'] // поддерживаемые языки
 
 export function middleware(request: NextRequest) {
   // Получаем текущий путь
