@@ -1,5 +1,6 @@
 import { translations } from './config';
 
 export async function getDictionary(lang: string) {
-  return translations[lang as keyof typeof translations] || translations.ua;
+  const validLang = lang as keyof typeof translations;
+  return translations[validLang] || translations.ua;
 } 
