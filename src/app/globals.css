@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+  --accent-rgb: 255, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+  min-height: 100vh;
+}
+
+@keyframes gradient-move {
+  0%, 100% {
+    background-position: 60% 40%, 0% 0%;
+    background-size: 120% 120%;
+  }
+  50% {
+    background-position: 40% 60%, 100% 100%;
+    background-size: 140% 140%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient-move 12s ease-in-out infinite alternate;
+}
+
+@layer components {
+  .container-custom {
+    @apply container mx-auto px-4;
+  }
+
+  /* Основная кнопка (красная) */
+  .btn-primary {
+    @apply px-8 py-3 bg-red-500 text-white rounded-xl font-bold 
+    hover:bg-red-600 transition-all duration-300 text-center
+    shadow-lg hover:shadow-red-500/20 hover:shadow-xl
+    border-2 border-red-500 hover:border-red-600
+    transform hover:-translate-y-0.5;
+  }
+
+  /* Вторичная кнопка (прозрачная с белой обводкой) */
+  .btn-secondary {
+    @apply px-8 py-3 bg-transparent text-white rounded-xl font-bold 
+    border-2 border-white hover:bg-white hover:text-black 
+    transition-all duration-300 text-center
+    shadow-lg hover:shadow-white/20 hover:shadow-xl
+    transform hover:-translate-y-0.5;
+  }
+  
+  .section-title {
+    @apply text-4xl font-bold mb-8;
+  }
+} 
